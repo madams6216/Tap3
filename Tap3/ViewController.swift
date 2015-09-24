@@ -74,17 +74,20 @@ class ViewController: UIViewController {
     
     func setupAudioPlayerWithFile(file:NSString, type:NSString) -> AVAudioPlayer  {
         //1
-        var path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
-        var url = NSURL.fileURLWithPath(path!)        //2
-        var error: NSError?
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: type as String)
+        let url = NSURL.fileURLWithPath(path!)
         
-        //3
-        var audioPlayer:AVAudioPlayer?
-        audioPlayer = AVAudioPlayer(contentsOfURL: url, error: &error)
+        //2
+        var audioPlayer:AVAudioPlayer!
         
-        //4
-        return audioPlayer!
+        // 3
+        do {
+            try audioPlayer = AVAudioPlayer(contentsOfURL: url)
+        } catch {
+            print("Player not available")
+        }
+        
+        return audioPlayer
     }
-    
 }
 
